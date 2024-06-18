@@ -75,7 +75,7 @@ Must be one of the following:
 
 > _Sample Commit Messages_
 
-- `feat: Added a new featyre` := `feat` is used here because the feature was non-existent before the commit.
+- `feat: Added a new feature` := `feat` is used here because the feature was non-existent before the commit.
 
 #
 
@@ -107,7 +107,7 @@ reference GitHub issues that this commit **Closes**.
 
 #
 
-2. Clone and then open it up on your prefered code editor
+2. Clone the forked repository and then open it up on your prefered code editor
 
 #
 
@@ -122,7 +122,7 @@ git remote add upstream https://github.com/fluxstride/my-gifter.git
 4. Pull upstream
 
 ```shell
-git pull upstream staging
+git checkout staging && git pull upstream staging
 ```
 
 #
@@ -130,7 +130,7 @@ git pull upstream staging
 5. Create a new branch for the user story you're working on eg :
 
 ```shell
-git checkout -b feat-import-file-from-url
+git checkout -b feat-my-feature
 ```
 
 #
@@ -154,7 +154,7 @@ git pull upstream staging
 9. Push changes to your new branch :
 
 ```shell
-git push origin feat-import-file-from-url
+git push origin feat-my-feature
 ```
 
 #
@@ -165,11 +165,11 @@ git push origin feat-import-file-from-url
 
 #
 
-## <a name="submit-pr"></a> Submitting a Pull Request (PR)
+## Submitting a Pull Request (PR)
 
 Before you submit your Pull Request (PR) consider the following guidelines:
 
-1. Search [GitHub](https://github.com/angular/angular/pulls) for an open or closed PR
+1. Search [GitHub](https://github.com/fluxstride/my-gifter/pulls) for an open or closed PR
    that relates to your submission. You don't want to duplicate effort.
 1. Fork the fluxstride/my-gifter repo.
 1. Make your changes in a new git branch:

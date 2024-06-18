@@ -8,7 +8,7 @@ My-Gifter is an online platform designed to facilitate organized gifting among g
 
 ## **Technologies Used**
 
-![Technologies](https://skillicons.dev/icons?i=js,ts,css,react&perLine=1)
+![Technologies](https://skillicons.dev/icons?i=js,ts,css,react)
 
 #
 
@@ -16,7 +16,7 @@ My-Gifter is an online platform designed to facilitate organized gifting among g
 
 ## **Local Setup Instruction**
 
-1. Ensure [nodejs](), [git]() and [pnpm package manager]() are installed on your machine.
+1. Ensure [nodejs](https://nodejs.org/en/download/package-manager), [git](https://www.git-scm.com/downloads) and [pnpm package manager](https://pnpm.io/installation) are installed on your machine.
 
 #
 
