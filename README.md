@@ -23,7 +23,7 @@ My-Gifter is an online platform designed to facilitate organized gifting among g
 2. Clone the repo using
 
 ```bash
-git clone https://github.com/zurichat/zc_plugin_company_files.git
+git clone https://github.com/fluxstride/my-gifter.git
 ```
 
 #
@@ -31,7 +31,7 @@ git clone https://github.com/zurichat/zc_plugin_company_files.git
 3. Change directory into the new clone
 
 ```bash
-cd zc_plugin_company_files
+cd my-gifter
 ```
 
 #
@@ -53,6 +53,10 @@ pnpm dev
 #
 
 6. Go to [http://localhost:5173](http://localhost:5173)
+
+#
+
+#
 
 ## **Want to contribute?**
 
