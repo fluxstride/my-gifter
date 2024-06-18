@@ -6,6 +6,14 @@ My-Gifter is an online platform designed to facilitate organized gifting among g
 
 #
 
+## **Technologies Used**
+
+![Technologies](https://skillicons.dev/icons?i=js,ts,css,react&perLine=1)
+
+#
+
+#
+
 ## **Getting Started**
 
 ### **Install Dependencies and run**
