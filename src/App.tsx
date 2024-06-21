@@ -1,13 +1,7 @@
 import './App.css';
-import NumberList from './components/Pickpage';
 
 function App() {
-  return (
-    <>
-      <h1>My Gifter</h1>
-      <NumberList />
-    </>
-  );
+    return <h1>Gifter</h1>;
 }
 
 export default App;
