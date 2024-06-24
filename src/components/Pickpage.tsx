@@ -13,31 +13,22 @@ function NumberList() {
   }
   // console.log(numbers);
 
-  const styles = {
-    container: {
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-    },
-    buttonContainer: {
-      display: 'flex',
-      justifyContent: 'center',
-      flexWrap: 'wrap',
-    },
-    numberBox: {
-      border: '1px solid black',
-      padding: '10px',
-      margin: '10px',
-      width: '200px',
-      fontSize: '24px',
-      cursor: 'pointer',
-    },
-  };
-
   return (
-    <div style={styles.container}>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+      }}
+    >
       <h2>Pick a number from the list</h2>
-      <div style={styles.buttonContainer}>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          flexWrap: 'wrap',
+        }}
+      >
         {numbers.map(num => (
           <button
             type="submit"
@@ -45,7 +36,14 @@ function NumberList() {
             onClick={() => {
               // displayConsole(num);
             }}
-            style={styles.numberBox}
+            style={{
+              border: '1px solid black',
+              padding: '10px',
+              margin: '10px',
+              width: '200px',
+              fontSize: '24px',
+              cursor: 'pointer',
+            }}
           >
             {num}
           </button>
