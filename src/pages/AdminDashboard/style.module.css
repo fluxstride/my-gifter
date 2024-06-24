@@ -1,5 +1,5 @@
 .container {
-  padding-inline: 3rem;
+  padding-inline: 0.8rem;
   max-width: 1200px;
   margin-inline: auto;
 }
@@ -56,6 +56,10 @@
   font-size: 1rem;
   text-wrap: nowrap;
 }
+.usersTable .actions {
+  display: flex;
+  gap: 1rem;
+}
 
 .usersTable .delete,
 .usersTable .edit {
@@ -65,16 +69,12 @@
   color: #fff;
 }
 
-.usersTable .actions {
-  display: flex;
-  gap: 1rem;
-}
-
 .usersTable .delete {
   background-color: red;
 }
 .usersTable .edit {
   background-color: #000;
+  margin-right: 1rem;
 }
 
 .modalBackdrop {
@@ -87,13 +87,13 @@
 }
 
 .modal {
-  width: calc(100% - 2rem);
+  width: calc(100% - 1rem);
   background-color: #fff;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  padding: 2rem 1.2rem;
+  padding: 1rem 1rem 2rem;
 }
 
 .modalHeader {
@@ -146,6 +146,7 @@
   cursor: pointer;
   color: #fff;
 }
+
 .modal form button:disabled {
   background-color: rgb(0, 0, 0, 0.5);
   cursor: not-allowed;

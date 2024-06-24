@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import './CodePage.css';
 import toast from 'react-hot-toast';
+import style from './PickPage.module.css';
 import API from '../api';
 
 interface User {
@@ -34,7 +34,7 @@ interface ErrorResponse {
   };
 }
 
-function CodePage() {
+function PickPage() {
   const [code, setCode] = useState('');
   const [picker, setPicker] = useState<User | null>(null);
   const [users, setUsers] = useState<User[] | null>(null);
@@ -77,46 +77,26 @@ function CodePage() {
 
   if (pickedUser) {
     return (
-      <div className="gifter">
-        <h1> You picked 🤝</h1>
-
-        <div className="name"> {pickedUser.name}</div>
+      <div className={style.pickedUser}>
+        <h1>🎊You picked🎊</h1>
+        <p>{pickedUser.name}</p>
       </div>
     );
   }
 
   if (picker && users) {
     return (
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-        }}
-      >
-        <h2>Pick a number from the list</h2>
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            flexWrap: 'wrap',
-          }}
-        >
+      <div className={style.userList}>
+        <h1>Pick a number from the list</h1>
+
+        <div>
           {users.map((user, index) => (
             <button
-              type="submit"
               key={user.id}
               onClick={() => {
                 pick(picker.id, user.id).catch(() => {});
               }}
-              style={{
-                border: '1px solid black',
-                padding: '10px',
-                margin: '10px',
-                width: '200px',
-                fontSize: '24px',
-                cursor: 'pointer',
-              }}
+              type="button"
             >
               {index + 1}
             </button>
@@ -127,40 +107,34 @@ function CodePage() {
   }
 
   return (
-    <div>
-      <div className="intro-container">
-        <h1>
-          {' '}
-          ATUKU-OWEI /MUMMY QUEEN DYNASTY AND IN-LAW&apos;S YEAR 2024 FAMILY
-          GIFTING{' '}
-        </h1>
-      </div>
-      <div className="form-container">
+    <div className={style.codePage}>
+      <h1>
+        ATUKU-OWEI / MUMMY QUEEN DYNASTY AND IN-LAW&apos;S YEAR 2024 FAMILY
+        GIFTING.
+      </h1>
+
+      <div className={style.codeForm}>
         <form
           onSubmit={e => {
             e.preventDefault();
             onCodeSubmit().catch(() => {});
           }}
         >
-          <label htmlFor="code" className="input-label">
-            Enter Code:
+          <label htmlFor="code">
+            Enter you code:
             <input
-              placeholder="Enter Code Here.."
-              type="number"
-              id="code"
-              required
-              value={code}
+              type="text"
+              name="code"
               onChange={e => {
                 setCode(e.target.value);
               }}
+              value={code}
             />
           </label>
-          <button type="submit" className="code-buttons">
-            Submit
-          </button>
+          <button type="submit">Submit</button>
         </form>
       </div>
     </div>
   );
 }
-export default CodePage;
+export default PickPage;
