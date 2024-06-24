@@ -114,7 +114,7 @@ function AdminDashboard() {
     let loadingId;
 
     try {
-      loadingId = toast.loading('processing you request');
+      loadingId = toast.loading('Processing you request');
       setLoadingEditUser(true);
       const response: UsersAPIResponse = await API.patch(`/gifters/${userId}`, {
         name,
@@ -122,7 +122,7 @@ function AdminDashboard() {
       });
 
       setUsers(response.data.data.gifters);
-      toast.success('User edited successfully');
+      toast.success('User updated successfully');
     } catch (error) {
       toast.error((error as ErrorResponse).response.data.message);
     } finally {
