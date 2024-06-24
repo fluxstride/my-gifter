@@ -42,10 +42,10 @@ function CodePage() {
 
   const pick = async (pickerId: string, pickedUserId: string) => {
     try {
-      const response: PickResponse = await API.post(
-        'http://localhost:5000/pick',
-        { pickerId, pickedUserId },
-      );
+      const response: PickResponse = await API.post('/pick', {
+        pickerId,
+        pickedUserId,
+      });
 
       setPickedUser(response.data.data.pickedUser);
     } catch (error) {
@@ -55,12 +55,9 @@ function CodePage() {
 
   const onCodeSubmit = async () => {
     try {
-      const response: PickerResponse = await API.post(
-        'http://localhost:5000/validate-code',
-        {
-          code,
-        },
-      );
+      const response: PickerResponse = await API.post('/validate-code', {
+        code,
+      });
 
       setPicker(response.data.data.picker);
 
