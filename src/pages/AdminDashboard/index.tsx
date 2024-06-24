@@ -8,14 +8,21 @@ function Loader() {
 }
 
 interface User {
-  uid: string;
+  id: string;
   name: string;
   code: string;
-  picked: string | null;
+  pickedBy: string | null;
+  hasPicked: boolean;
 }
 
 interface UsersAPIResponse {
-  data: { data: { users: User[] } };
+  data: { data: { gifters: User[] } };
+}
+
+interface ErrorResponse {
+  response: {
+    data: { message: string };
+  };
 }
 
 function AdminDashboard() {
@@ -32,9 +39,9 @@ function AdminDashboard() {
     const fetchUsers = async () => {
       try {
         setLoading(true);
-        const response: UsersAPIResponse = await API.get('/users');
+        const response: UsersAPIResponse = await API.get('/gifters');
 
-        setUsers(response.data.data.users);
+        setUsers(response.data.data.gifters);
       } catch (error) {
         toast.error((error as { message: string }).message);
       } finally {
@@ -76,15 +83,15 @@ function AdminDashboard() {
 
     try {
       setLoadingAddUser(true);
-      const response: UsersAPIResponse = await API.post('/users', {
+      const response: UsersAPIResponse = await API.post('/gifters', {
         name,
         code,
       });
 
-      setUsers(response.data.data.users);
+      setUsers(response.data.data.gifters);
       toast.success('User added successfully');
     } catch (error) {
-      toast.error((error as { message: string }).message);
+      toast.error((error as ErrorResponse).response.data.message);
     } finally {
       closeAddModal();
       setLoadingAddUser(false);
@@ -95,14 +102,14 @@ function AdminDashboard() {
   const handleEditUser = async (userId: string) => {
     try {
       setLoadingEditUser(true);
-      const response: UsersAPIResponse = await API.patch(`/users/${userId}`, {
+      const response: UsersAPIResponse = await API.patch(`/gifters/${userId}`, {
         name,
         code,
       });
 
-      setUsers(response.data.data.users);
+      setUsers(response.data.data.gifters);
     } catch (error) {
-      toast.error((error as { message: string }).message);
+      toast.error((error as ErrorResponse).response.data.message);
     } finally {
       closeEditModal();
       setLoadingEditUser(false);
@@ -114,11 +121,11 @@ function AdminDashboard() {
       setLoadingEditUser(true);
       toast.loading('Deleting user', { id: 'deleting' });
 
-      const response: UsersAPIResponse = await API.delete(`/users/${userId}`);
-      setUsers(response.data.data.users);
+      const response: UsersAPIResponse = await API.delete(`/gifters/${userId}`);
+      setUsers(response.data.data.gifters);
       toast.success('User deleted successfully');
     } catch (error) {
-      toast.error((error as { message: string }).message);
+      toast.error((error as ErrorResponse).response.data.message);
     } finally {
       toast.dismiss('deleting');
       setLoadingEditUser(false);
@@ -223,6 +230,7 @@ function AdminDashboard() {
                   <th>Name</th>
                   <th>Code</th>
                   <th>Picked by</th>
+                  <th>Has picked</th>
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -230,11 +238,12 @@ function AdminDashboard() {
               <tbody>
                 {users
                   ? users.map(user => (
-                      <tr key={user.uid}>
-                        <td>{user.uid}</td>
+                      <tr key={user.id}>
+                        <td>{user.id}</td>
                         <td>{user.name}</td>
                         <td>{user.code}</td>
-                        <td>{user.picked ?? '-'}</td>
+                        <td>{user.pickedBy ?? '-'}</td>
+                        <td>{user.hasPicked ? 'Yes' : 'No'}</td>
                         <td className={style.actions}>
                           <button
                             className={style.delete}
@@ -274,7 +283,7 @@ function AdminDashboard() {
                                 <form
                                   onSubmit={event => {
                                     event.preventDefault();
-                                    handleEditUser(user.uid).catch(() => {});
+                                    handleEditUser(user.id).catch(() => {});
                                   }}
                                 >
                                   <label htmlFor="name">
@@ -320,7 +329,7 @@ function AdminDashboard() {
                             className={style.edit}
                             type="button"
                             onClick={() => {
-                              deleteUser(user.uid).catch(() => {});
+                              deleteUser(user.id).catch(() => {});
                             }}
                           >
                             Remove x
