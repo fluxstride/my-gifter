@@ -1,7 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { FormEventHandler, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import style from './style.module.css';
 import API from '../../api';
+import useAuth from '../../hooks/useAuth';
 
 function Loader() {
   return <div className={style.loader} />;
@@ -34,6 +37,8 @@ function AdminDashboard() {
   const [loading, setLoading] = useState(false);
   const [loadingAddUser, setLoadingAddUser] = useState(false);
   const [loadingEditUser, setLoadingEditUser] = useState(false);
+  const [userIdToEdit, setUserIdToEdit] = useState('');
+  const { logout } = useAuth();
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -69,19 +74,24 @@ function AdminDashboard() {
   const openEditModal = (user: User) => {
     setName(user.name);
     setCode(user.code);
+    setUserIdToEdit(user.id);
     setShowEditModal(true);
   };
 
   const closeEditModal = () => {
     setShowEditModal(false);
+    setUserIdToEdit('');
+
     resetInputs();
   };
 
   // eslint-disable-next-line @typescript-eslint/no-misused-promises
   const handleAddUser: FormEventHandler = async e => {
     e.preventDefault();
+    let loadingId;
 
     try {
+      loadingId = toast.loading('Adding user');
       setLoadingAddUser(true);
       const response: UsersAPIResponse = await API.post('/gifters', {
         name,
@@ -95,12 +105,16 @@ function AdminDashboard() {
     } finally {
       closeAddModal();
       setLoadingAddUser(false);
+      toast.dismiss(loadingId);
     }
   };
 
   // eslint-disable-next-line @typescript-eslint/no-misused-promises
   const handleEditUser = async (userId: string) => {
+    let loadingId;
+
     try {
+      loadingId = toast.loading('processing you request');
       setLoadingEditUser(true);
       const response: UsersAPIResponse = await API.patch(`/gifters/${userId}`, {
         name,
@@ -108,11 +122,13 @@ function AdminDashboard() {
       });
 
       setUsers(response.data.data.gifters);
+      toast.success('User edited successfully');
     } catch (error) {
       toast.error((error as ErrorResponse).response.data.message);
     } finally {
       closeEditModal();
       setLoadingEditUser(false);
+      toast.dismiss(loadingId);
     }
   };
 
@@ -136,8 +152,21 @@ function AdminDashboard() {
     <>
       <div className={style.heading}>
         <div className={style.container}>
-          <h1>Dashboard</h1>
-          <p className={style.headingText}>Welcome, Admin</p>
+          <div>
+            <h1>Dashboard</h1>
+            <p className={style.headingText}>Welcome, Admin</p>
+          </div>
+
+          <span>
+            <button
+              type="button"
+              onClick={() => {
+                logout();
+              }}
+            >
+              Logout
+            </button>
+          </span>
         </div>
       </div>
 
@@ -255,76 +284,6 @@ function AdminDashboard() {
                             Edit User
                           </button>
 
-                          {showEditModal && code === user.code && (
-                            <div
-                              className={style.modalBackdrop}
-                              onClick={e => {
-                                if (e.currentTarget === e.target) {
-                                  closeEditModal();
-                                }
-                              }}
-                              tabIndex={0}
-                              role="button"
-                              onKeyDown={() => {}}
-                            >
-                              <div className={style.modal}>
-                                <div className={style.modalHeader}>
-                                  <h2>Edit User</h2>
-
-                                  <button
-                                    type="button"
-                                    className={style.modalClose}
-                                    onClick={closeEditModal}
-                                  >
-                                    X
-                                  </button>
-                                </div>
-
-                                <form
-                                  onSubmit={event => {
-                                    event.preventDefault();
-                                    handleEditUser(user.id).catch(() => {});
-                                  }}
-                                >
-                                  <label htmlFor="name">
-                                    Name
-                                    <input
-                                      type="text"
-                                      name="name"
-                                      value={name}
-                                      onChange={e => {
-                                        setName(e.target.value);
-                                      }}
-                                      required
-                                    />
-                                  </label>
-
-                                  <label htmlFor="code">
-                                    Code
-                                    <input
-                                      type="number"
-                                      name="code"
-                                      value={code}
-                                      onChange={e => {
-                                        setCode(e.target.value);
-                                      }}
-                                      required
-                                    />
-                                  </label>
-
-                                  <button
-                                    type="submit"
-                                    disabled={loadingEditUser}
-                                  >
-                                    {!loadingEditUser
-                                      ? 'Submit'
-                                      : 'Submitting..'}
-                                  </button>
-                                </form>
-                              </div>
-                            </div>
-                          )}
-
                           <button
                             className={style.edit}
                             type="button"
@@ -343,6 +302,71 @@ function AdminDashboard() {
           </div>
         )}
       </div>
+
+      {showEditModal && (
+        <div
+          className={style.modalBackdrop}
+          onClick={e => {
+            if (e.currentTarget === e.target) {
+              closeEditModal();
+            }
+          }}
+          tabIndex={0}
+          role="button"
+          onKeyDown={() => {}}
+        >
+          <div className={style.modal}>
+            <div className={style.modalHeader}>
+              <h2>Edit User</h2>
+
+              <button
+                type="button"
+                className={style.modalClose}
+                onClick={closeEditModal}
+              >
+                X
+              </button>
+            </div>
+
+            <form
+              onSubmit={event => {
+                event.preventDefault();
+                handleEditUser(userIdToEdit).catch(() => {});
+              }}
+            >
+              <label htmlFor="name">
+                Name
+                <input
+                  type="text"
+                  name="name"
+                  value={name}
+                  onChange={e => {
+                    setName(e.target.value);
+                  }}
+                  required
+                />
+              </label>
+
+              <label htmlFor="code">
+                Code
+                <input
+                  type="number"
+                  name="code"
+                  value={code}
+                  onChange={e => {
+                    setCode(e.target.value);
+                  }}
+                  required
+                />
+              </label>
+
+              <button type="submit" disabled={loadingEditUser}>
+                {!loadingEditUser ? 'Submit' : 'Submitting..'}
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
     </>
   );
 }

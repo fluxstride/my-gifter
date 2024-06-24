@@ -39,22 +39,35 @@ function PickPage() {
   const [picker, setPicker] = useState<User | null>(null);
   const [users, setUsers] = useState<User[] | null>(null);
   const [pickedUser, setPickedUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(false);
 
   const pick = async (pickerId: string, pickedUserId: string) => {
+    let loadingId;
+
     try {
+      setLoading(true);
+      loadingId = toast.loading('Processing your selection');
       const response: PickResponse = await API.post('/pick', {
         pickerId,
         pickedUserId,
       });
 
       setPickedUser(response.data.data.pickedUser);
+      toast.success('Selection successful');
     } catch (error) {
       toast.error((error as ErrorResponse).response.data.message);
+    } finally {
+      toast.dismiss(loadingId);
+      setLoading(true);
     }
   };
 
   const onCodeSubmit = async () => {
+    let loadingId;
+
     try {
+      setLoading(true);
+      loadingId = toast.loading('Validating your code');
       const response: PickerResponse = await API.post('/validate-code', {
         code,
       });
@@ -70,8 +83,13 @@ function PickPage() {
       if (response.data.data.gifters) {
         setUsers(response.data.data.gifters);
       }
+
+      toast.success('Validation successful');
     } catch (error) {
       toast.error((error as ErrorResponse).response.data.message);
+    } finally {
+      toast.dismiss(loadingId);
+      setLoading(false);
     }
   };
 
@@ -97,6 +115,7 @@ function PickPage() {
                 pick(picker.id, user.id).catch(() => {});
               }}
               type="button"
+              disabled={loading}
             >
               {index + 1}
             </button>
@@ -131,7 +150,9 @@ function PickPage() {
               value={code}
             />
           </label>
-          <button type="submit">Submit</button>
+          <button type="submit" disabled={loading}>
+            {loading ? 'Submitting..' : 'Submit'}
+          </button>
         </form>
       </div>
     </div>

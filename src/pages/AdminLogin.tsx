@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { FormEventHandler, useState } from 'react';
 import useAuth from '../hooks/useAuth';
 import style from './AdminLogin.module.css';
@@ -44,7 +45,9 @@ function AdminLogin() {
           />
         </label>
 
-        <button type="submit">{loading ? 'Loggin In...' : 'Login'}</button>
+        <button type="submit" disabled={loading}>
+          {loading ? 'Loggin In...' : 'Login'}
+        </button>
       </form>
     </div>
   );

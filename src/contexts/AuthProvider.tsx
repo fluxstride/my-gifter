@@ -48,7 +48,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const login = async (username: string, password: string) => {
+    let loadingId;
     try {
+      setLoading(true);
+      loadingId = toast.loading('Logging in');
       const response: UserAPIResponse = await API.post('/login', {
         username,
         password,
@@ -62,11 +65,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       toast.success('Login successful');
     } catch (error) {
       toast.error((error as ErrorResponse).response.data.message);
+    } finally {
+      setLoading(false);
+      toast.dismiss(loadingId);
     }
   };
 
   const signup = async (data: { username: string; password: string }) => {
     try {
+      setLoading(true);
       const response: UserAPIResponse = await API.post('/signup', data);
 
       const { token } = response.data.data;
@@ -78,6 +85,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setUser(signupUser);
     } catch (error) {
       toast.error((error as ErrorResponse).response.data.message);
+    } finally {
+      setLoading(false);
     }
   };
 
