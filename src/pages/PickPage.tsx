@@ -108,7 +108,7 @@ function PickPage() {
         <h1>Pick a number from the list</h1>
 
         <div>
-          {users.map((user, index) => (
+          {users.map(user => (
             <button
               key={user.id}
               onClick={() => {
@@ -117,7 +117,7 @@ function PickPage() {
               type="button"
               disabled={loading}
             >
-              {index + 1}
+              {user.id}
             </button>
           ))}
         </div>
@@ -148,6 +148,7 @@ function PickPage() {
                 setCode(e.target.value);
               }}
               value={code}
+              required
             />
           </label>
           <button type="submit" disabled={loading}>
