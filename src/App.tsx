@@ -1,9 +1,7 @@
 import './App.css';
-import CodePage from './pages/CodePage';
 
 function App() {
-  // return <h1>My Gifter</h1>;
-  return <CodePage />;
+    return <h1>Gifter</h1>;
 }
 
 export default App;
