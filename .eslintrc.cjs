@@ -6,8 +6,8 @@ module.exports = {
   env: { browser: true, es2020: true },
   extends: [
     'eslint:recommended',
-    'plugin:@typescript-eslint/strict-type-checked',
-    'plugin:@typescript-eslint/stylistic-type-checked',
+    'plugin:@typescript-eslint/strict',
+    'plugin:@typescript-eslint/stylistic',
     'airbnb',
     'airbnb/hooks',
     'airbnb-typescript',

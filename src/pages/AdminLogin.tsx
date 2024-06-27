@@ -1,18 +1,14 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { FormEventHandler, useState } from 'react';
-import useAuth from '../hooks/useAuth';
 import style from './AdminLogin.module.css';
+import useAuthContext from '../hooks/useAuthContext';
 
 function AdminLogin() {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const { login, loading } = useAuth();
+  const { login, loading } = useAuthContext();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  // eslint-disable-next-line @typescript-eslint/no-misused-promises
   const onSubmit: FormEventHandler = async e => {
     e.preventDefault();
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     await login(username, password);
   };
 

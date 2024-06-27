@@ -20,6 +20,7 @@
     "react-dom": "^18.2.0",
     "react-hot-toast": "^2.4.1",
     "react-router-dom": "^6.23.1",
+    "react-transition-group": "^4.4.5",
     "vite": "^5.2.0"
   },
   "devDependencies": {
@@ -28,6 +29,7 @@
     "@commitlint/prompt-cli": "^19.3.1",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
+    "@types/react-transition-group": "^4.4.10",
     "@typescript-eslint/eslint-plugin": "^7.2.0",
     "@typescript-eslint/parser": "^7.2.0",
     "eslint": "^8.57.0",

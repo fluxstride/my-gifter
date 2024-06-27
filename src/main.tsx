@@ -3,7 +3,8 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Toaster } from 'react-hot-toast';
 import App from './App';
-import { AuthProvider } from './contexts/AuthProvider';
+import AuthProvider from './contexts/AuthProvider';
+import UsersProvider from './contexts/UsersProvider';
 
 const rootElement = document.getElementById('root');
 
@@ -12,7 +13,9 @@ if (rootElement instanceof HTMLElement) {
     <React.StrictMode>
       <Toaster />
       <AuthProvider>
-        <App />
+        <UsersProvider>
+          <App />
+        </UsersProvider>
       </AuthProvider>
     </React.StrictMode>,
   );

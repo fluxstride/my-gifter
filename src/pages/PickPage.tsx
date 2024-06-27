@@ -2,37 +2,12 @@ import { useState } from 'react';
 import toast from 'react-hot-toast';
 import style from './PickPage.module.css';
 import API from '../api';
-
-interface User {
-  id: string;
-  name: string;
-  code: string;
-  pickedBy: string | null;
-  hasPicked: boolean;
-}
-interface PickerResponse {
-  data: {
-    data: {
-      picker: User;
-      gifters: User[] | null;
-      pickedUser: User | null;
-    };
-  };
-}
-
-interface PickResponse {
-  data: {
-    data: {
-      pickedUser: User;
-    };
-  };
-}
-
-interface ErrorResponse {
-  response: {
-    data: { message: string };
-  };
-}
+import {
+  ApiErrorResponse,
+  ErrorResponse,
+  PickerResponse,
+  User,
+} from '../types';
 
 function PickPage() {
   const [code, setCode] = useState('');
@@ -47,7 +22,7 @@ function PickPage() {
     try {
       setLoading(true);
       loadingId = toast.loading('Processing your selection');
-      const response: PickResponse = await API.post('/pick', {
+      const response: PickerResponse = await API.post('/pick', {
         pickerId,
         pickedUserId,
       });
@@ -55,7 +30,10 @@ function PickPage() {
       setPickedUser(response.data.data.pickedUser);
       toast.success('Selection successful');
     } catch (error) {
-      toast.error((error as ErrorResponse).response.data.message);
+      toast.error(
+        (error as ApiErrorResponse).response.data.message ??
+          (error as ErrorResponse).message,
+      );
     } finally {
       toast.dismiss(loadingId);
       setLoading(true);
@@ -86,7 +64,10 @@ function PickPage() {
 
       toast.success('Validation successful');
     } catch (error) {
-      toast.error((error as ErrorResponse).response.data.message);
+      toast.error(
+        (error as ApiErrorResponse).response.data.message ??
+          (error as ErrorResponse).message,
+      );
     } finally {
       toast.dismiss(loadingId);
       setLoading(false);

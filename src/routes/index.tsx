@@ -1,27 +1,22 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { Navigate, Outlet } from 'react-router-dom';
-import useAuth from '../hooks/useAuth';
+import useAuthContext from '../hooks/useAuthContext';
 
 export function AuthRoute() {
-  const { user, isLoading } = useAuth();
+  const { user, loading } = useAuthContext();
 
-  if (!isLoading && !user) {
+  if (!loading && !user) {
     return <Navigate to="/login" />;
   }
 
-  return !user ? <div>Loading...</div> : <Outlet />;
+  return !user ? null : <Outlet />;
 }
 
 export function NonAuthRoute() {
-  const { user, isLoading } = useAuth();
+  const { user, loading } = useAuthContext();
 
-  if (!isLoading && user) {
+  if (!loading && user) {
     return <Navigate to="/dashboard" />;
   }
 
-  return isLoading || (!isLoading && !!user) ? (
-    <div>Loading ...</div>
-  ) : (
-    <Outlet />
-  );
+  return loading || (!loading && !!user) ? null : <Outlet />;
 }
