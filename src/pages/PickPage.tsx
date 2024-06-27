@@ -105,10 +105,13 @@ function PickPage() {
   if (picker && users) {
     return (
       <div className={style.userList}>
-        <h1>Pick a number from the list</h1>
+        <p>
+          Hi <span className={style.pickerName}>{picker.name}</span>, please
+          pick a number from the list
+        </p>
 
         <div>
-          {users.map(user => (
+          {users.map((user, index) => (
             <button
               key={user.id}
               onClick={() => {
@@ -117,7 +120,7 @@ function PickPage() {
               type="button"
               disabled={loading}
             >
-              {user.id}
+              {index + 1}
             </button>
           ))}
         </div>

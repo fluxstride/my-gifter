@@ -11,8 +11,13 @@
   margin-top: 2rem;
 }
 
-.userList h1 {
+.userList p {
   text-align: center;
+  font-size: 1.2rem;
+}
+
+.pickerName {
+  font-weight: 600;
 }
 
 .userList button {
