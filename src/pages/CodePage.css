@@ -55,7 +55,7 @@ body {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-form {
+.code-form {
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -64,14 +64,14 @@ form {
   padding: 10px;
 }
 
-label {
+.code-label {
   font-size: 18px;
   margin-bottom: 20px;
   color: gray;
   text-align: center;
 }
 
-input {
+.code-input {
   padding: 10px;
   font-size: 16px;
   margin-top: 10px;
@@ -82,7 +82,7 @@ input {
   border: 1px solid rgb(27, 27, 27);
 }
 
-button {
+.code-submit-btn {
   padding: 10px 20px;
   font-size: 16px;
   background-color: black;
@@ -95,7 +95,7 @@ button {
   margin-top: 8px;
 }
 
-button:hover {
+.code-submit-btn:hover {
   background-color: rgb(114, 107, 107);
 }
 
@@ -112,20 +112,20 @@ button:hover {
 
 /* Responsive design */
 @media (min-width: 600px) {
-  form {
+  .code-form {
     flex-direction: column;
   }
 
-  .form-container label {
+  .form-container .code-label {
     display: inline-block;
     margin: 10px;
   }
 
-  input {
+  .code-input {
     margin-bottom: 0;
     width: 90%;
   }
-  button {
+  .code-submit-btn {
     width: 25%;
   }
 }
